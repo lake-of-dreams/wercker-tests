@@ -75,7 +75,8 @@ test-docker-build2:
     - script: 
         name: Wait for container to start 
         code: | 
-          while [[ "$(curl -s -o /dev/null -w ''200'' localhost:5000)" != "200" ]]; do sleep 5; done   
+          echo BUILDID=$BUILDID
+          until $(curl --output /dev/null --silent --head --fail http://test-container:5000); do printf '.'; sleep 5; done 
     - script: 
         name: Test the container
         code: |
