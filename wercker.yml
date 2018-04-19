@@ -17,7 +17,7 @@ build:
             return 1
           fi             
 test-docker-build1:
-  # Test the docker-build step (part 1)
+  # Test the docker-build step (part 1) 
   box: google/golang
   steps:
     - script:
