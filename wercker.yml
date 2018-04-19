@@ -2,7 +2,10 @@ build:
   # The build step doesn't do very much and is just a launchpad for other pipelines
   box: alpine
   steps:
-    - script: 
+    - script:
+        code: echo $WERCKER_MAIN_PIPELINE_STARTED
+        code: echo $WERCKER_RUN_URL  
+    - script:    
         name: Check environment variables
         code: |
           if [[ -z "$USERNAME" ]]; then
@@ -19,6 +22,7 @@ test-docker-build1:
   steps:
     - script:
         code: echo $WERCKER_MAIN_PIPELINE_STARTED
+        code: echo $WERCKER_RUN_URL
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
