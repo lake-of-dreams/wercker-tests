@@ -7,11 +7,11 @@ build:
         code: |
           if [[ -z "$USERNAME" ]]; then
             echo Environment variable \$USERNAME is not set
-            exit 1
+            return 1
           fi   
           if [[ -z "$PASSWORD" ]]; then
             echo Environment variable \$PASSWORD is not set
-            exit 1
+            return 1
           fi             
 test-docker-build1:
   # Test the docker-build step (part 1)
