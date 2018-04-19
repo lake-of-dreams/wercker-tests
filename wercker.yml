@@ -5,8 +5,7 @@ build:
     - script:
         name: Who am I?
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED
-          echo $WERCKER_RUN_URL  
+          echo WERCKER_BUILD_ID=$WERCKER_BUILD_ID  
     - script:    
         name: Check environment variables
         code: |
@@ -25,8 +24,7 @@ test-docker-build1:
     - script:
         name: Who am I?
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED
-          echo $WERCKER_RUN_URL  
+          echo WERCKER_BUILD_ID=$WERCKER_BUILD_ID  
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -66,8 +64,7 @@ test-docker-build2:
     - script:
         name: Who am I?
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED
-          echo $WERCKER_RUN_URL  
+          echo WERCKER_BUILD_ID=$WERCKER_BUILD_ID  
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
