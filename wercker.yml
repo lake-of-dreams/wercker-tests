@@ -63,8 +63,8 @@ test-docker-build2:
   services: 
     - name: test-container
       id: docker.io/$USERNAME/wercker-test:test-docker-build1
-      config: 
-        ports: 5000      
+      ports:
+        - "5000"
   steps:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
