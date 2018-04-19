@@ -1,12 +1,9 @@
 build:
-  # The build step doesm't do very much and is just a launchpad for other pipelines
+  # The build step doesn't do very much and is just a launchpad for other pipelines
   box: alpine
   steps:
     - script: 
         name: Check environment variables
-        code: 
-    - script:
-        name: Unit tests
         code: |
           if [[ -z "$USERNAME" ]]; then
             echo Environment variable \$USERNAME is not set
@@ -17,9 +14,11 @@ build:
             exit 1
           fi             
 test-docker-build1:
-  # Test the docker-build step
+  # Test the docker-build step (part 1)
   box: google/golang
   steps:
+    - script:
+        code: echo $WERCKER_MAIN_PIPELINE_STARTED
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -48,4 +47,30 @@ test-docker-build1:
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-build1
-      
+test-docker-build2:
+  # Test the docker-build step (part 2)
+  # Test that we can pull the newly-created image, start it and connect to it
+  box: alpine
+  services: 
+    - name: test-container
+      id: docker.io/$USERNAME/wercker-test:test-docker-build1
+  steps:
+    - script:
+        code: echo $WERCKER_MAIN_PIPELINE_STARTED
+    - script:
+        name: Install Curl
+        code: apk --no-cache add curl 
+    - script: 
+        name: Test the container
+        code: |
+            if curlOutput=`curl -s test-container:5000`; then 
+                if [ "$curlOutput" == "Hello World!!" ]; then
+                    echo "Test passed: container gave expected response"
+                else
+                    echo "Test failed: container gave unexpected response: " $curlOutput
+                    exit 1
+                fi   
+            else 
+                echo "Test failed: container did not respond"
+                exit 1
+            fi               
