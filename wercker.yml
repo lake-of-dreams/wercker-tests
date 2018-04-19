@@ -1,5 +1,10 @@
 build:
+  # The build pipeline doesn't do very much and is simply a launchpad for other tests
   box: alpine
+    steps:
+    - script:
+        name: Unit tests
+        code: go test ./...  
 test-docker-build:
   box: google/golang
   steps:
@@ -35,5 +40,4 @@ test-docker-build:
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/docker-build-golang
         tag: latest
-    pipeline2:
       
