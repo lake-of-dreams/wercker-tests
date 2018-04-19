@@ -3,9 +3,11 @@ build:
   box: alpine
   steps:
     - script:
-        name: Who am I?
+        name: Create a unique id for the run, common to all pipelines in the workflow
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED  
+          date +%s%N > /pipeline/cache/build-id
+          export BUILDID=`cat /pipeline/cache/build-id`
+          echo BUILDID=$BUILDID
     - script:    
         name: Check environment variables
         code: |
@@ -22,9 +24,10 @@ test-docker-build1:
   box: google/golang
   steps:
     - script:
-        name: Who am I?
+        name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED  
+          export BUILDID=`cat /pipeline/cache/build-id`
+          echo BUILDID=$BUILDID
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -62,9 +65,10 @@ test-docker-build2:
       id: docker.io/$USERNAME/wercker-test:test-docker-build1
   steps:
     - script:
-        name: Who am I?
+        name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          echo WERCKER_MAIN_PIPELINE_STARTED=$WERCKER_MAIN_PIPELINE_STARTED  
+          export BUILDID=`cat /pipeline/cache/build-id`
+          echo BUILDID=$BUILDID
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
