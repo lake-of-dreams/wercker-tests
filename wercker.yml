@@ -57,6 +57,7 @@ test-docker-build2:
   steps:
     - script:
         code: echo $WERCKER_MAIN_PIPELINE_STARTED
+        code: echo $WERCKER_RUN_URL
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
