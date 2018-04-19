@@ -73,9 +73,12 @@ test-docker-build2:
         name: Install Curl
         code: apk --no-cache add curl 
     - script: 
+        name: Wait for container to start 
+        code: | 
+          while [[ "$(curl -s -o /dev/null -w ''200'' localhost:5000)" != "200" ]]; do sleep 5; done   
+    - script: 
         name: Test the container
         code: |
-            curl test-container:5000
             if curlOutput=`curl -s test-container:5000`; then 
                 if [ "$curlOutput" == "Hello World!!" ]; then
                     echo "Test passed: container gave expected response"
