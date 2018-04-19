@@ -1,18 +1,25 @@
 build:
   # The build step doesm't do very much and is just a launchpad for other pipelines
-  box: google/golang
+  box: alpine
   steps:
-    # Test the project
+    - script: 
+        name: Check environment variables
+        code: 
     - script:
         name: Unit tests
-        code: go test ./...     
-test-docker-build:
+        code: |
+          if [[ -z "$USERNAME" ]]; then
+            echo Environment variable \$USERNAME is not set
+            exit 1
+          fi   
+          if [[ -z "$PASSWORD" ]]; then
+            echo Environment variable \$PASSWORD is not set
+            exit 1
+          fi             
+test-docker-build1:
+  # Test the docker-build step
   box: google/golang
   steps:
-    # Test the project
-    - script:
-        name: Unit tests
-        code: go test ./...     
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -33,12 +40,12 @@ test-docker-build:
 #                echo "Test failed: container did not respond"
 #                exit 1
 #            fi        
-    - internal/docker-kill:
-        name: myTestContainer               
+#    - internal/docker-kill:
+#        name: myTestContainer               
     - internal/docker-push: 
         image-name: my-new-image
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
-        repository: docker.io/$USERNAME/docker-build-golang
-        tag: latest
+        repository: docker.io/$USERNAME/wercker-test
+        tag: test-docker-build1
       
