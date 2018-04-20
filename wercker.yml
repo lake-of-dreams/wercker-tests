@@ -180,7 +180,7 @@ test-docker-push-classic2:
   box: alpine
   services: 
     - name: test-docker-classic-push-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-build
+      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic
       ports:
         - "5000"
   steps:
