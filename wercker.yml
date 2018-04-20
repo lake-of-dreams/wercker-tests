@@ -21,9 +21,11 @@ build:
             return 1
           fi   
     - script:
-        name: Edit source to add build ID, so we can be sure that we are testing the right version of out images
+        name: Edit source to add build ID
+        # so we can be sure that we are testing the right version of our images
         code: |
-          sed -i "s/^Hello World!!.*/Hello World!! ${BUILDID}/" /path/to/file                
+          sed -i 's/Hello World!!/Hello World!! ${BUILDID}/g' main.go   
+          cat main.go          
     - script:
         name: Copy contents of repository to /pipeline/output for next pipeline to use
         code: cp -r /pipeline/source/* /pipeline/output
