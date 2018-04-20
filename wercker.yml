@@ -246,11 +246,8 @@ test-docker-scratch-push1:
     - script:
         name: Build the executable. 
         code: |
-          # This will be run in a golang base image created by committing the current container, so no need to worry about dependencies
-          go build -o myapp 
-          echo veryfying build
-          pwd
-          ls -l           
+          # This will be run in a minimal image so must not have any dependencies
+          CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -o /pipeline/output/myapp .
     - internal/docker-scratch-push: 
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
