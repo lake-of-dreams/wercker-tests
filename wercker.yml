@@ -18,14 +18,7 @@ build:
           if [[ -z "$PASSWORD" ]]; then
             echo Environment variable \$PASSWORD is not set
             return 1
-          fi       
-    - script:
-        name: Add sentinels  
-        code: |
-          touch /pipeline/file-added-to-slash-pipeline
-          touch $WERCKER_ROOT/file-added-to-wercker-root
-          touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir        
-          touch $WERCKER_CACHE_DIR/file-added-to-wercker-cache_dir        
+          fi         
     - script:
         name: Check what we've got 
         code: |
@@ -42,6 +35,13 @@ build:
     - script:
         name: Copy contents of repository to /pipeline/output for next pipeline to use
         code: cp -r /pipeline/source/* /pipeline/output
+    - script:
+        name: Add sentinels  
+        code: |
+          touch /pipeline/file-added-to-slash-pipeline
+          touch $WERCKER_ROOT/file-added-to-wercker-root
+          touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir        
+          touch $WERCKER_CACHE_DIR/file-added-to-wercker-cache_dir             
 test-docker-build1:
   # Test the docker-build step (part 1) 
   box: google/golang
@@ -62,8 +62,6 @@ test-docker-build1:
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
           ls -l $WERCKER_CACHE_DIR 
-          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT   
-          echo WERCKER_GIT_REPOSITORY=$WERCKER_GIT_REPOSITORY             
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -97,7 +95,7 @@ test-docker-build2:
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
-    - name: test-container
+    - name: test-container$BUILDID
       id: docker.io/$USERNAME/wercker-test:test-docker-build1
       ports:
         - "5000"
@@ -117,9 +115,7 @@ test-docker-build2:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR 
-          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT   
-          echo WERCKER_GIT_REPOSITORY=$WERCKER_GIT_REPOSITORY              
+          ls -l $WERCKER_CACHE_DIR            
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
