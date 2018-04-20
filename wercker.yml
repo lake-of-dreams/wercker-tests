@@ -221,7 +221,7 @@ test-docker-push-classic2:
                 echo "Test failed: container did not respond"
                 exit 1
             fi         
- test-docker-push-classic1:
+test-docker-push-classic1:
   # Test the "classic" docker-push step (which commits the current container) (part 1) 
   box: google/golang
   steps:
