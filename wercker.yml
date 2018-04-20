@@ -179,8 +179,8 @@ test-docker-push-classic2:
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
-    - name: test-docker-push-classic-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic1
+    - name: test-docker-build-container
+      id: docker.io/$USERNAME/wercker-test:test-docker-build1
       ports:
         - "5000"
   steps:
@@ -188,18 +188,29 @@ test-docker-push-classic2:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID     
+          echo BUILDID=$BUILDID
+    - script:
+        name: Check what we've got 
+        code: |
+          echo Contents of /pipeline
+          ls -l /pipeline   
+          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
+          ls -l $WERCKER_ROOT        
+          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
+          ls -l $WERCKER_CACHE_DIR            
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
     - script: 
         name: Wait for container to start 
         code: | 
-          until $(curl --output /dev/null --silent --head --fail http://test-docker-push-classic-container:5000); do printf '.'; sleep 5; done 
+          until $(curl --output /dev/null --silent --head --fail http://test-docker-build-container:5000); do printf '.'; sleep 5; done 
     - script: 
         name: Test the container
         code: |
-            if curlOutput=`curl -s test-docker-push-classic-container:5000`; then 
+            if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 if [ "$curlOutput" == "Hello World!!" ]; then
                     echo "Test passed: container gave expected response"
                 else
@@ -209,4 +220,4 @@ test-docker-push-classic2:
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi               
+            fi           
