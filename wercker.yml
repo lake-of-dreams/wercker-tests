@@ -179,8 +179,8 @@ test-docker-push-classic2:
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
-    - name: test-docker-push-classic-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic
+    - name: test-docker-build-container
+      id: docker.io/$USERNAME/wercker-test:test-docker-build
       ports:
         - "5000"
   steps:
@@ -206,11 +206,11 @@ test-docker-push-classic2:
     - script: 
         name: Wait for container to start 
         code: | 
-          until $(curl --output /dev/null --silent --head --fail http://test-docker-push-classic-container:5000); do printf '.'; sleep 5; done 
+          until $(curl --output /dev/null --silent --head --fail http://test-docker-build-container:5000); do printf '.'; sleep 5; done 
     - script: 
         name: Test the container
         code: |
-            if curlOutput=`curl -s test-docker-push-classic-container:5000`; then 
+            if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 if [ "$curlOutput" == "Hello World!!" ]; then
                     echo "Test passed: container gave expected response"
                 else
@@ -220,7 +220,7 @@ test-docker-push-classic2:
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi         
+            fi          
 test-docker-scratch-push1:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 1) 
   box: google/golang
