@@ -96,7 +96,7 @@ test-docker-build2:
         name: Test the container
         code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
-                if [ "$curlOutput" == "Hello World!!" ]; then
+                if [ "$curlOutput" == "Hello World!! $BUILDID" ]; then
                     echo "Test passed: container gave expected response"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
