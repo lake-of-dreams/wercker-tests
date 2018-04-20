@@ -174,6 +174,8 @@ test-docker-push-classic1:
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-push-classic
+        cmd: /pipeline/source/myapp
+        ports: "5000"
 test-docker-push-classic2:
   # Test the "classic" docker-push step (which commits the current container) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
@@ -254,6 +256,8 @@ test-docker-scratch-push1:
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-scratch-push
+        cmd: /myapp
+        ports: "5000"        
 test-docker-scratch-push2:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
