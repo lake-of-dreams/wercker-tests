@@ -19,30 +19,14 @@ build:
           if [[ -z "$PASSWORD" ]]; then
             echo Environment variable \$PASSWORD is not set
             return 1
-          fi         
+          fi   
     - script:
-        name: Check what we've got 
+        name: Edit source to add build ID, so we can be sure that we are testing the right version of out images
         code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR 
-          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT   
-          echo WERCKER_GIT_REPOSITORY=$WERCKER_GIT_REPOSITORY       
+          sed -i "s/^Hello World!!.*/Hello World!! ${BUILDID}/" /path/to/file                
     - script:
         name: Copy contents of repository to /pipeline/output for next pipeline to use
         code: cp -r /pipeline/source/* /pipeline/output
-    - script:
-        name: Add sentinels  
-        code: |
-          touch /pipeline/file-added-to-slash-pipeline
-          touch $WERCKER_ROOT/file-added-to-wercker-root
-          touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir        
-          touch $WERCKER_CACHE_DIR/file-added-to-wercker-cache_dir 
     - script: 
         name: Run the unit tests
         code: |
@@ -56,17 +40,6 @@ test-docker-build1:
         code: |
           export BUILDID=`cat /pipeline/cache/build-id`
           echo BUILDID=$BUILDID
-    - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR 
     - internal/docker-build: 
         dockerfile: Dockerfile 
         image-name: my-new-image # name used to refer to this image until it's pushed   
@@ -109,18 +82,7 @@ test-docker-build2:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID
-    - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR            
+          echo BUILDID=$BUILDID         
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
@@ -152,17 +114,6 @@ test-docker-push-classic1:
           export BUILDID=`cat /pipeline/cache/build-id`
           echo BUILDID=$BUILDID
     - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR 
-    - script:
         name: Build the executable. This will be run in a golang base image created by committing the current container, so no need to worry about dependencies
         code: |
           go build -o myapp 
@@ -190,18 +141,7 @@ test-docker-push-classic2:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID
-    - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR            
+          echo BUILDID=$BUILDID       
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
@@ -233,22 +173,10 @@ test-docker-scratch-push1:
           export BUILDID=`cat /pipeline/cache/build-id`
           echo BUILDID=$BUILDID
     - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR 
-    - script:
         name: Build the executable. 
         code: |
           # This will be run in a minimal image so must not have any dependencies
           CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -o /pipeline/output/myapp .
-          ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-scratch-push: 
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
@@ -270,18 +198,7 @@ test-docker-scratch-push2:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID
-    - script:
-        name: Check what we've got 
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR            
+          echo BUILDID=$BUILDID        
     - script:
         name: Install Curl
         code: apk --no-cache add curl 
