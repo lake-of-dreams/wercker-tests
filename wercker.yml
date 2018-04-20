@@ -301,7 +301,7 @@ test-docker-push-classic2:
                 echo "Test failed: container did not respond"
                 exit 1
             fi        
- test-docker-scratch-push1:
+test-docker-scratch-push1:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 1) 
   box: google/golang
   steps:
