@@ -94,14 +94,14 @@ test-docker-build1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-build1
+        tag: test-docker-build
 test-docker-build2:
   # Test the docker-build step (part 2)
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
     - name: test-docker-build-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-build1
+      id: docker.io/$USERNAME/wercker-test:test-docker-build
       ports:
         - "5000"
   steps:
@@ -253,14 +253,14 @@ test-docker-push-classic1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-push-classic1
+        tag: test-docker-push-classic
 test-docker-push-classic2:
   # Test the "classic" docker-push step (which commits the current container) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
     - name: test-docker-push-classic-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-build1
+      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic
       ports:
         - "5000"
   steps:
@@ -333,14 +333,14 @@ test-docker-scratch-push1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-push-classic1
+        tag: test-docker-scratch-push
 test-docker-scratch-push2:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
   box: alpine
   services: 
     - name: test-docker-scratch-push-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-build1
+      id: docker.io/$USERNAME/wercker-test:test-docker-scratch-push
       ports:
         - "5000"
   steps:
