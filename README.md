@@ -1,17 +1,19 @@
 # wercker-tests
 A  repository for testing pipelines in wercker
  
-To run these tests fork this repository and add it as an applicaiton in Wercker. Then set up the following workflow:
+To run these tests:
 
+Fork this repository and add it as an application in Wercker. 
+
+Configure the new application to run the following workflow:
 ```
 build --> test-docker-build1        --> test-docker-build2           Tests internal/docker-build
           test-docker-push-classic1 --> test-docker-push-classic2    Tests internal/docker-push (committing and pushing pipeline container)
           test-docker-scratch-push1 --> test-docker-scratch-push2    Tests internal/docker-scratch-push
 ```
-
-Set the following environment variables in your workflow:
-* `USERNAME` - Docker Hub username
-* `PASSWORD` - Docker Hub password
+Configure your application with the following environment variables 
+* `USERNAME` - Your Docker Hub username
+* `PASSWORD` - Your Docker Hub password
 
 Then run the `build` pipeline,  either manually (easier) or by making a token edit to your clone of this repo and pushing it.
 
