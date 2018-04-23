@@ -9,6 +9,10 @@ build --> test-docker-build1        --> test-docker-build2           Tests inter
           test-docker-scratch-push1 --> test-docker-scratch-push2    Tests internal/docker-scratch-push
 ```
 
+Set the following environment variables in your workflow:
+* `USERNAME` - Docker Hub username
+* `PASSWORD` - Docker Hub password
+
 Then run the `build` pipeline,  either manually (easier) or by making a token edit to your clone of this repo and pushing it.
 
 See the [latest runs on app.wercker.com](https://app.wercker.com/nigeldeakin/wercker-tests/runs)
