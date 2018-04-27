@@ -1,4 +1,4 @@
-build:
+build: 
   # The build step doesn't do very much 
   # It runs the unit tests and is a common prerequisite for all subsequent pipelines
   box: google/golang
