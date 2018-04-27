@@ -155,6 +155,7 @@ test-docker-push-classic2:
           until $(curl --output /dev/null --silent --head --fail http://test-docker-classic-push-container:5000); do printf '.'; sleep 5; done 
     - script: 
         name: Test the container
+        code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 expected = "Hello World!! $BUILDID"
                 if [ "$curlOutput" == $expected ]; then
