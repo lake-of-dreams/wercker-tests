@@ -96,11 +96,12 @@ test-docker-build2:
         name: Test the container
         code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
-                if [ "$curlOutput" == "Hello World!! $BUILDID" ]; then
-                    echo "Test passed: container gave expected response"
+                expected = "Hello World!! $BUILDID"
+                if [ "$curlOutput" == $expected ]; then
+                    echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was Hello World!! $BUILDID"
+                    echo "The expected response was $expected"
                     exit 1
                 fi   
             else 
@@ -154,19 +155,19 @@ test-docker-push-classic2:
           until $(curl --output /dev/null --silent --head --fail http://test-docker-classic-push-container:5000); do printf '.'; sleep 5; done 
     - script: 
         name: Test the container
-        code: |
-            if curlOutput=`curl -s test-docker-classic-push-container:5000`; then 
-                if [ "$curlOutput" == "Hello World!! $BUILDID" ]; then
-                    echo "Test passed: container gave expected response"
+            if curlOutput=`curl -s test-docker-build-container:5000`; then 
+                expected = "Hello World!! $BUILDID"
+                if [ "$curlOutput" == $expected ]; then
+                    echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was Hello World!! $BUILDID"
+                    echo "The expected response was $expected"
                     exit 1
                 fi   
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi          
+            fi    
 test-docker-scratch-push1:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 1) 
   box: google/golang
@@ -213,12 +214,13 @@ test-docker-scratch-push2:
     - script: 
         name: Test the container
         code: |
-            if curlOutput=`curl -s test-docker-scratch-push-container:5000`; then 
-                if [ "$curlOutput" == "Hello World!! $BUILDID" ]; then
-                    echo "Test passed: container gave expected response"
+            if curlOutput=`curl -s test-docker-build-container:5000`; then 
+                expected = "Hello World!! $BUILDID"
+                if [ "$curlOutput" == $expected ]; then
+                    echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was Hello World!! $BUILDID"
+                    echo "The expected response was $expected"
                     exit 1
                 fi   
             else 
