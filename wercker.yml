@@ -100,6 +100,7 @@ test-docker-build2:
                     echo "Test passed: container gave expected response"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
+                    echo "The expected response was Hello World!! $BUILDID"
                     exit 1
                 fi   
             else 
@@ -159,6 +160,7 @@ test-docker-push-classic2:
                     echo "Test passed: container gave expected response"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
+                    echo "The expected response was Hello World!! $BUILDID"
                     exit 1
                 fi   
             else 
@@ -216,6 +218,7 @@ test-docker-scratch-push2:
                     echo "Test passed: container gave expected response"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
+                    echo "The expected response was Hello World!! $BUILDID"
                     exit 1
                 fi   
             else 
