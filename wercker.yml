@@ -98,10 +98,10 @@ test-docker-build2:
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == $expected ]; then
-                    echo "Test passed: container gave expected response $expected"
+                    echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was "" $expected
+                    echo "The expected response was: " $expected
                     exit 1
                 fi   
             else 
@@ -159,16 +159,16 @@ test-docker-push-classic2:
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == $expected ]; then
-                    echo "Test passed: container gave expected response $expected"
+                    echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was "" $expected
+                    echo "The expected response was: " $expected
                     exit 1
                 fi   
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi    
+            fi     
 test-docker-scratch-push1:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 1) 
   box: google/golang
@@ -218,13 +218,13 @@ test-docker-scratch-push2:
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == $expected ]; then
-                    echo "Test passed: container gave expected response $expected"
+                    echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was "" $expected
+                    echo "The expected response was: " $expected
                     exit 1
                 fi   
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi                                  
+            fi                              
