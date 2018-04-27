@@ -101,7 +101,7 @@ test-docker-build2:
                     echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was $expected"
+                    echo "The expected response was "" $expected
                     exit 1
                 fi   
             else 
@@ -162,7 +162,7 @@ test-docker-push-classic2:
                     echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was $expected"
+                    echo "The expected response was "" $expected
                     exit 1
                 fi   
             else 
@@ -221,7 +221,7 @@ test-docker-scratch-push2:
                     echo "Test passed: container gave expected response $expected"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
-                    echo "The expected response was $expected"
+                    echo "The expected response was "" $expected
                     exit 1
                 fi   
             else 
