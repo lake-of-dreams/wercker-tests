@@ -97,7 +97,7 @@ test-docker-build2:
         code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
-                if [ "$curlOutput" == $expected ]; then
+                if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
@@ -158,7 +158,7 @@ test-docker-push-classic2:
         code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
-                if [ "$curlOutput" == $expected ]; then
+                if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
@@ -217,7 +217,7 @@ test-docker-scratch-push2:
         code: |
             if curlOutput=`curl -s test-docker-build-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
-                if [ "$curlOutput" == $expected ]; then
+                if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
