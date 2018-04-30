@@ -130,7 +130,7 @@ test-docker-push-classic1:
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-push-classic
         cmd: /pipeline/source/myapp
-        ports: "5000,12345,54321/udp,12121/tpw,wwww"
+        #ports: "5000,12345,54321/udp,12121/tpw,wwww"
 test-docker-push-classic2:
   # Test the "classic" docker-push step (which commits the current container) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
