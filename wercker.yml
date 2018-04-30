@@ -156,7 +156,7 @@ test-docker-push-classic2:
     - script: 
         name: Test the container
         code: |
-            if curlOutput=`curl -s test-docker-build-container:5000`; then 
+            if curlOutput=`curl -s test-docker-classic-push-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
@@ -215,7 +215,7 @@ test-docker-scratch-push2:
     - script: 
         name: Test the container
         code: |
-            if curlOutput=`curl -s test-docker-build-container:5000`; then 
+            if curlOutput=`curl -s test-docker-scratch-push-container:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
