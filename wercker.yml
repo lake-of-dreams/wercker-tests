@@ -75,6 +75,11 @@ test-docker-build1:
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-build
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"           
 test-docker-build2:
   # Test the docker-build step (part 2)
   # Test that we can pull the newly-created image, start it and connect to it
@@ -112,7 +117,12 @@ test-docker-build2:
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi               
+            fi    
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"               
 test-docker-push-classic1:
   # Test the "classic" docker-push step (which commits the current container) (part 1) 
   box: google/golang
@@ -136,6 +146,11 @@ test-docker-push-classic1:
         tag: test-docker-push-classic
         cmd: /pipeline/source/myapp
         ports: "5000"
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"           
 test-docker-push-classic2:
   # Test the "classic" docker-push step (which commits the current container) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
@@ -174,6 +189,11 @@ test-docker-push-classic2:
                 echo "Test failed: container did not respond"
                 exit 1
             fi     
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"   
 test-docker-scratch-push1:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 1) 
   box: google/golang
@@ -238,3 +258,8 @@ test-docker-scratch-push2:
                 echo "Test failed: container did not respond"
                 exit 1
             fi                              
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"   
