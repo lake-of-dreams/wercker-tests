@@ -194,7 +194,12 @@ test-docker-scratch-push1:
         repository: docker.io/$USERNAME/wercker-test
         tag: test-docker-scratch-push
         cmd: /myapp
-        ports: "5000/tcp,"        
+        ports: "5000/tcp," 
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"   
 test-docker-scratch-push2:
   # Test the docker-scratch-push step (which copies the output to a scratch image) (part 2) 
   # Test that we can pull the newly-created image, start it and connect to it
