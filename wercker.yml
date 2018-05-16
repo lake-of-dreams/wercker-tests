@@ -32,7 +32,12 @@ build:
     - script: 
         name: Run the unit tests
         code: |
-          go test ./...            
+          go test ./...    
+  after-steps:
+    - script:
+        name: The after step
+        code: |
+          echo "Running after step"        
 test-docker-build1:
   # Test the docker-build step (part 1) 
   box: google/golang
