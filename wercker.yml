@@ -264,6 +264,7 @@ test-docker-scratch-push2:
         code: |
           echo "Running after step"   
 test-pipeline:
+  box: alpine
   steps:
     - script:
       code: | 
