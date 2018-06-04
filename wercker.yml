@@ -263,3 +263,11 @@ test-docker-scratch-push2:
         name: The after step
         code: |
           echo "Running after step"   
+test-pipeline:
+  steps:
+    - script:
+      code: | 
+        echo "do something"
+    - internal/docker-push:
+      username: $REPO_USERNAME
+      password: $REPO_PASSWORD
