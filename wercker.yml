@@ -86,7 +86,7 @@ test-docker-build2:
   box: alpine
   services: 
     - name: test-docker-build-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-build$BUILDID
+      id: docker.io/$USERNAME/wercker-test:test-docker-build-$BUILDID
       ports:
         - "5000"
   steps:
@@ -157,7 +157,7 @@ test-docker-push-classic2:
   box: alpine
   services: 
     - name: test-docker-classic-push-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic$BUILDID
+      id: docker.io/$USERNAME/wercker-test:test-docker-push-classic-$BUILDID
       ports:
         - "5000"
   steps:
@@ -226,7 +226,7 @@ test-docker-scratch-push2:
   box: alpine
   services: 
     - name: test-docker-scratch-push-container
-      id: docker.io/$USERNAME/wercker-test:test-docker-scratch-push$BUILDID
+      id: docker.io/$USERNAME/wercker-test:test-docker-scratch-push-$BUILDID
       ports:
         - "5000"
   steps:
