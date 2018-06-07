@@ -74,7 +74,7 @@ test-docker-build1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-build$BUILDID
+        tag: test-docker-build-$BUILDID
   after-steps:
     - script:
         name: The after step
@@ -143,7 +143,7 @@ test-docker-push-classic1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-push-classic$BUILDID
+        tag: test-docker-push-classic-$BUILDID
         cmd: /pipeline/source/myapp
         ports: "5000"
   after-steps:
@@ -212,7 +212,7 @@ test-docker-scratch-push1:
         username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         repository: docker.io/$USERNAME/wercker-test
-        tag: test-docker-scratch-push$BUILDID
+        tag: test-docker-scratch-push-$BUILDID
         cmd: /myapp
         ports: "5000/tcp," 
   after-steps:
