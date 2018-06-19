@@ -162,7 +162,7 @@ test-rdd:
     - script:
         name: native docker build 
         code: |
-          docker build .
+          docker build -t $USERNAME/test-rdd-$BUILDID:latest .
           docker images
     - script:
         name: start the newly-created image using docker run
