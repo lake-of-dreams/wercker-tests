@@ -8,7 +8,8 @@ build:
         code: |
           date +%s%N > /pipeline/cache/build-id
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID-$PROD_OR_STAGING
+          export BUILDID=${BUILDID}-${PROD_OR_STAGING}
+          echo BUILDID=$BUILDID
     - script:    
         name: Check environment variables
         code: |
