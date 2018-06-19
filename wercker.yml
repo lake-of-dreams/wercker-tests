@@ -144,7 +144,11 @@ test-rdd:
         name: docker 
         code: |
           docker --version
+          echo docker ps
           docker ps
+          echo docker images
+          docker images
+          docker build .
 test-docker-push-classic1:
   # Test the "classic" docker-push step (which commits the current container) (part 1) 
   box: google/golang
