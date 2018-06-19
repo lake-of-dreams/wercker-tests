@@ -7,8 +7,7 @@ build:
         name: Create a unique id for the run, common to all pipelines in the workflow
         code: |
           date +%s%N > /pipeline/cache/build-id
-          export BUILDID=`cat /pipeline/cache/build-id`
-          export BUILDID=${BUILDID}-${PROD_OR_STAGING}
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID
     - script:    
         name: Check environment variables
@@ -46,7 +45,7 @@ test-docker-build1:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID
     - internal/docker-build: 
         dockerfile: Dockerfile 
@@ -103,7 +102,7 @@ test-docker-build2:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID         
     - script:
         name: Install Curl
@@ -136,7 +135,7 @@ test-rdd:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID
     - script:
         name: Install docker
@@ -157,7 +156,7 @@ test-docker-push-classic1:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID
     - script:
         name: Build the executable. This will be run in a golang base image created by committing the current container, so no need to worry about dependencies
@@ -191,7 +190,7 @@ test-docker-push-classic2:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID       
     - script:
         name: Install Curl
@@ -228,7 +227,7 @@ test-docker-scratch-push1:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID
     - script:
         name: Build the executable. 
@@ -260,7 +259,7 @@ test-docker-scratch-push2:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
         code: |
-          export BUILDID=`cat /pipeline/cache/build-id`
+          export BUILDID=`cat /pipeline/cache/build-id`-${PROD_OR_STAGING}
           echo BUILDID=$BUILDID        
     - script:
         name: Install Curl
