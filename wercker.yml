@@ -40,7 +40,7 @@ build:
           echo "Running after step"        
 test-docker-build1:
   # Test that we can run the docker-build step, test it using docker-run and then push it to a repo
-  box: google/golang
+  box: alpine
   steps:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
