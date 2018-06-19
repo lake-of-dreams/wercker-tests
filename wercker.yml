@@ -4,11 +4,11 @@ build:
   box: google/golang
   steps:
     - script:
-        name: Create a unique id for the run, common to all pipelines in the  workflow
+        name: Create a unique id for the run, common to all pipelines in the workflow
         code: |
           date +%s%N > /pipeline/cache/build-id
           export BUILDID=`cat /pipeline/cache/build-id`
-          echo BUILDID=$BUILDID
+          echo BUILDID=$BUILDID-$PROD_OR_STAGING
     - script:    
         name: Check environment variables
         code: |
