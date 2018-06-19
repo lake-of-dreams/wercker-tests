@@ -52,7 +52,14 @@ test-docker-build1:
         image-name: my-new-image # name used to refer to this image until it's pushed   
     - internal/docker-run:
         image: my-new-image
-        name: myTestContainer     
+        name: myTestContainer 
+    - script:
+        name: Install Curl
+        code: apk --no-cache add curl 
+    - script: 
+        name: Wait for container to start 
+        code: | 
+          until $(curl --output /dev/null --silent --head --fail http://my-new-image:5000); do printf '.'; sleep 5; done        
     - script: 
         name: Test the container that we started using docker-run
         code: |
