@@ -156,6 +156,8 @@ test-rdd:
           docker version
           echo running docker ps
           docker ps
+          docker kill 709e75a4762a
+          docker ps
           echo running docker images
           echo docker images
           docker images
