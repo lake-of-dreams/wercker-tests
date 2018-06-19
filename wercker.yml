@@ -39,7 +39,7 @@ build:
         code: |
           echo "Running after step"        
 test-docker-build1:
-  # Test the docker-build step (part 1) 
+  # Test that we can run the docker-build step, test it using docker-run and then push it to a repo
   box: google/golang
   steps:
     - script:
@@ -54,19 +54,21 @@ test-docker-build1:
         image: my-new-image
         name: myTestContainer     
     - script: 
-        name: Test the container
+        name: Test the container 
         code: |
-            if curlOutput=`curl -s myTestContainer:5000`; then 
-                if [ "$curlOutput" == "Hello World!!" ]; then
-                    echo "Test passed: container gave expected response"
+            if curlOutput=`curl -s test-docker-build-container:5000`; then 
+                export expected="Hello World!! $BUILDID"
+                if [ "$curlOutput" == "$expected" ]; then
+                    echo "Test passed: container gave expected response: " $expected
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
+                    echo "The expected response was: " $expected
                     exit 1
                 fi   
             else 
                 echo "Test failed: container did not respond"
                 exit 1
-            fi        
+            fi           
     - internal/docker-kill:
         name: myTestContainer               
     - internal/docker-push: 
@@ -82,7 +84,7 @@ test-docker-build1:
           echo "Running after step"           
 test-docker-build2:
   # Test the docker-build step (part 2)
-  # Test that we can pull the newly-created image, start it and connect to it
+  # Test that we can pull the newly-created image, start it as a service, and connect to it
   box: alpine
   services: 
     - name: test-docker-build-container
