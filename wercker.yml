@@ -272,3 +272,15 @@ test-pipeline:
     - internal/docker-push:
       username: $REPO_USERNAME
       password: $REPO_PASSWORD
+test-pipeline2:
+  box: alpine
+  steps:
+    - script:
+      code: | 
+        echo "do something"
+    - internal/docker-push:
+        username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
+        password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
+        repository: docker.io/$USERNAME/wercker-test
+        registry: wombat.io 
+        tag: test-pipeline2
