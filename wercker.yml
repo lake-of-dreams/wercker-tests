@@ -167,7 +167,7 @@ test-rdd:
     - script:
         name: start the newly-created image using docker run
         code: |
-          docker run --rm -p 5000:5000 --name container-test-rdd-$BUILDID $USERNAME/test-rdd-$BUILDID:latest
+          docker run --rm -d -p 5000:5000 --name container-test-rdd-$BUILDID $USERNAME/test-rdd-$BUILDID:latest
           echo running docker ps
           docker ps
     - script:
