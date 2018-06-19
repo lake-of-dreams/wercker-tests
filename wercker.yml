@@ -130,7 +130,7 @@ test-docker-build2:
 test-rdd:
   # Test that we can use a remote docker daemon to build an image
   box: alpine
-    docker:true
+  docker:true
   steps:
     - script:
         name: Get the a unique id for the run, common to all pipelines in the workflow
