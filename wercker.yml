@@ -59,11 +59,11 @@ test-docker-build1:
     - script: 
         name: Wait for container to start 
         code: | 
-          until $(curl --output /dev/null --silent --head --fail http://my-new-image:5000); do printf '.'; sleep 5; done        
+          until $(curl --output /dev/null --silent --head --fail http://myTestContainer:5000); do printf '.'; sleep 5; done        
     - script: 
         name: Test the container that we started using docker-run
         code: |
-            if curlOutput=`curl -s my-new-image:5000`; then 
+            if curlOutput=`curl -s myTestContainer:5000`; then 
                 export expected="Hello World!! $BUILDID"
                 if [ "$curlOutput" == "$expected" ]; then
                     echo "Test passed: container gave expected response: " $expected
