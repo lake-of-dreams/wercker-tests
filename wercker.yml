@@ -127,6 +127,15 @@ test-docker-build2:
                 echo "Test failed: container did not respond"
                 exit 1
             fi    
+test-internal-docker-build:
+  # Test that we can run the internal/docker-build step, test it using internal/docker-run and then push it to a repo
+  box: alpine
+  steps:
+    - script:
+        name: Get the a unique id for the run, common to all pipelines in the workflow
+        code: |
+          export BUILDID=`cat /pipeline/cache/build-id`
+          echo BUILDID=$BUILDID            
 test-rdd:
   # Test that we can use a remote docker daemon to build an image
   box: alpine
