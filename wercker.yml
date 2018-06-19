@@ -167,11 +167,12 @@ test-rdd:
     - script:
         name: start the newly-created image using docker run
         code: |
-          docker run -d --rm -p 5000:5000 $USERNAME/test-rdd-$BUILDID:latest
+          docker run -d --rm -p 5000:5000 $USERNAME/test-rdd-$BUILDID:latest -name container-test-rdd-$BUILDID
+          docker ps
     - script:
         name: kill the container using docker kill
         code: |
-          docker kill $USERNAME/test-rdd-$BUILDID:latest          
+          docker kill container-test-rdd-$BUILDID
 test-docker-push-classic1:
   # Test the "classic" docker-push step (which commits the current container) (part 1) 
   box: google/golang
